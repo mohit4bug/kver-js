@@ -1,0 +1,39 @@
+{
+  "name": "@mohit4bug/kver-js",
+  "version": "1.0.0-beta.1",
+  "files": [
+    "dist",
+    "package.json"
+  ],
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
+    },
+    "./adapters/*": {
+      "require": "./dist/adapters/*/index.js",
+      "import": "./dist/adapters/*/index.mjs"
+    }
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "scripts": {
+    "build": "tsup src"
+  },
+  "keywords": [
+    "kver",
+    "kyc",
+    "verification",
+    "api"
+  ],
+  "author": "Mohit Khatri",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "axios": "^1.7.9"
+  }
+}

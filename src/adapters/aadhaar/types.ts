@@ -7,8 +7,12 @@ export interface IVerifyOtpParams {
 }
 
 export interface IGenerateOtpResponse {
-  message: string
+  clientId: string
+  statusCode: number
 }
 export interface IVerifyOtpResponse {
-  message: string
+  data: {
+    gender: 'M' | 'F'
+    fullName: string
+  }
 }

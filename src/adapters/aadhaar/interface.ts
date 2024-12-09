@@ -1,9 +1,9 @@
 import type {
   IGenerateOtpParams,
-  IVerifyOtpParams,
   IGenerateOtpResponse,
+  IVerifyOtpParams,
   IVerifyOtpResponse
-} from '@/adapters/aadhaar/types'
+} from './types'
 
 export interface BaseAadhaarAdapter {
   generateOtp: (params: IGenerateOtpParams) => Promise<IGenerateOtpResponse>

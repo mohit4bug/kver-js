@@ -1,4 +1,4 @@
-import { BaseAadhaarAdapter } from '@/adapters/aadhaar/interface'
+import { BaseAadhaarAdapter } from '../adapters/aadhaar/interface'
 
 export type TDocumentType = 'aadhaar' | 'pan'
 

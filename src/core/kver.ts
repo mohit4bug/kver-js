@@ -1,4 +1,4 @@
-import type { IKverConfig, TDocumentType, TKverAdapter } from '@/core/types'
+import type { IKverConfig, TDocumentType, TKverAdapter } from './types'
 
 export class Kver<T extends TDocumentType> {
   adapter: TKverAdapter<T>

@@ -1,1 +1,1 @@
-export * from '@/core/kver'
+export * from './core/kver'

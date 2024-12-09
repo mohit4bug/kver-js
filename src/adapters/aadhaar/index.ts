@@ -1,1 +1,1 @@
-export * from '@/adapters/aadhaar/SurepassAadhaarAdapter'
+export * from './SurepassAadhaarAdapter'

@@ -1,9 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    },
     "module": "NodeNext",
     "moduleResolution": "nodenext",
     "lib": ["ES2015", "DOM"]

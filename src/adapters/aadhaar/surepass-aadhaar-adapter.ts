@@ -126,7 +126,8 @@ export class SurepassAadhaarAdapter implements BaseAadhaarAdapter {
           vtc: res.data.data?.address?.vtc,
           loc: res.data.data?.address?.loc
         },
-        zip: res.data.data?.zip
+        zip: res.data.data?.zip,
+        profileImage: res.data.data?.profile_image
       }
     }
   }

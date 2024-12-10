@@ -23,5 +23,6 @@ export interface IVerifyOtpResponse {
       loc: string
     }
     zip: string
+    profileImage: string
   }
 }

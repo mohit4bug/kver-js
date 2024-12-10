@@ -1,4 +1,5 @@
 import axios, { type AxiosInstance } from 'axios'
+import { ServiceUnavailableException } from '../../exceptions'
 import type { BaseAadhaarAdapter } from './interface'
 import type {
   IGenerateOtpParams,
@@ -57,6 +58,12 @@ export class SurepassAadhaarAdapter implements BaseAadhaarAdapter {
       otp: params.otp
     })
 
+    const data = res.data?.data
+
+    if (!data) {
+      throw new ServiceUnavailableException("Couldn't verify OTP")
+    }
+
     /**
      * @example
      * {
@@ -93,9 +100,34 @@ export class SurepassAadhaarAdapter implements BaseAadhaarAdapter {
      * }
      */
 
-    // We only need gender and full name for now.
+    const gender = (() => {
+      switch (res.data.data?.gender) {
+        case undefined:
+          return '-'
+        case 'M':
+          return 'MALE'
+        case 'F':
+          return 'FEMALE'
+        default:
+          return 'OTHER'
+      }
+    })()
+
+    
     return {
-      data: { gender: res.data.data.gender, fullName: res.data.data.full_name }
+      data: {
+        gender,
+        fullName: res.data.data?.full_name,
+        careOf: res.data.data?.care_of,
+        dob: res.data.data?.dob,
+        address: {
+          house: res.data.data?.address?.house,
+          street: res.data.data?.address?.street,
+          vtc: res.data.data?.address?.vtc,
+          loc: res.data.data?.address?.loc
+        },
+        zip: res.data.data?.zip
+      }
     }
   }
 }

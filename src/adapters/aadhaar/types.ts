@@ -12,7 +12,16 @@ export interface IGenerateOtpResponse {
 }
 export interface IVerifyOtpResponse {
   data: {
-    gender: 'M' | 'F'
+    gender: 'MALE' | 'FEMALE' | 'OTHER' | '-'
     fullName: string
+    careOf: string
+    dob: string
+    address: {
+      house: string
+      street: string
+      vtc: string
+      loc: string
+    }
+    zip: string
   }
 }

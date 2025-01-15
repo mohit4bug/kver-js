@@ -1,4 +1,4 @@
-# KVer.js
+# Kver.js
 
 A lightweight TypeScript library for Aadhaar card verification using multiple KYC service providers.
 

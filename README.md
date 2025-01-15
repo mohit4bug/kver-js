@@ -1,6 +1,6 @@
 # Kver.js
 
-A lightweight TypeScript library for Aadhaar card verification using multiple KYC service providers.
+A lightweight TypeScript library for document verification supporting multiple identity documents and KYC service providers.
 
 ## Features
 
@@ -9,6 +9,7 @@ A lightweight TypeScript library for Aadhaar card verification using multiple KY
 - 🔌 Adapter-based architecture
 - ⚡ Promise-based async operations
 - 📦 Multiple KYC provider support
+- 📄 Multi-document verification support (currently Aadhaar, with more coming soon)
 
 ## Installation
 
@@ -33,11 +34,11 @@ const adapter = new SurepassAadhaarAdapter({
 // Create a new Kver instance
 const kver = new Kver({ 
   adapter, 
-  documentType: 'aadhaar' 
+  documentType: 'aadhaar' // Support for more document types coming soon
 })
 
-// Example usage
-async function verifyAadhaar() {
+// Example usage with Aadhaar
+async function verifyDocument() {
   try {
     // Generate OTP
     const otpResponse = await kver.adapter.generateOtp({ 
@@ -69,6 +70,7 @@ interface IGenerateOtpResponse {
 
 ### Verification Response
 ```typescript
+// Aadhaar verification response
 interface IVerifyOtpResponse {
   data: {
     gender: string
@@ -85,11 +87,15 @@ interface IVerifyOtpResponse {
     profileImage: string
   }
 }
+
+// Additional document type responses will be added in future releases
 ```
 
 ## Available Adapters
 
-### SurepassAadhaarAdapter
+### Current Adapters
+
+#### SurepassAadhaarAdapter
 
 The SurepassAadhaarAdapter integrates with Surepass's Aadhaar verification API.
 
@@ -99,16 +105,27 @@ const adapter = new SurepassAadhaarAdapter({
 })
 ```
 
+### Upcoming Adapters
+
+We are actively working on adding support for more document types and service providers. Stay tuned for updates!
+
 ## Error Handling
 
 The library throws typed exceptions that you can catch and handle:
 
 - `ServiceUnavailableException`: Thrown when the KYC service is unavailable
-- Additional error types may be thrown based on the specific adapter being used
+- Additional error types may be thrown based on the specific adapter and document type being used
+
+## Roadmap
+
+- Support for PAN card verification
+- Support for Driving License verification
+- Additional KYC service provider integrations
+- Enhanced validation and error handling for different document types
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Whether it's adding support for new document types, implementing new service provider adapters, or improving existing functionality, please feel free to submit a Pull Request.
 
 ## License
 

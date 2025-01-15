@@ -13,7 +13,7 @@
     "api"
   ],
   "author": "Mohit Khatri",
-  "license": "ISC",
+  "license": "MIT",
   "description": "",
   "devDependencies": {
     "typescript": "^5.7.2"

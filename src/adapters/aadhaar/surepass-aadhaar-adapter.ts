@@ -13,7 +13,7 @@ interface ISurepassAadhaarAdapterConfig {
 
 export class SurepassAadhaarAdapter implements BaseAadhaarAdapter {
   private axiosClient: AxiosInstance
-  private BASE_URL = 'https://kyc-api.aadhaarkyc.io/api/v1'
+  private BASE_URL = 'https://kyc-api.surepass.io/api/v1'
 
   constructor(private config: ISurepassAadhaarAdapterConfig) {
     this.axiosClient = axios.create({

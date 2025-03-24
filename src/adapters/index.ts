@@ -1,2 +1,3 @@
 export * from './aadhaar'
-export * from './license'
+export * from './electricity'
+export * from './driving-license'

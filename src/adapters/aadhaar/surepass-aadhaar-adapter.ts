@@ -1,5 +1,4 @@
-import axios, { type AxiosInstance } from 'axios'
-import { ServiceUnavailableException } from '../../exceptions'
+import axios, { AxiosError, type AxiosInstance } from 'axios'
 import type { BaseAadhaarAdapter } from './interface'
 import type {
   IGenerateOtpParams,
@@ -28,106 +27,95 @@ export class SurepassAadhaarAdapter implements BaseAadhaarAdapter {
   generateOtp = async (
     params: IGenerateOtpParams
   ): Promise<IGenerateOtpResponse> => {
-    const res = await this.axiosClient.post('/aadhaar-v2/generate-otp', {
-      id_number: params.aadhaarNumber
-    })
+    try {
+      const res = await this.axiosClient.post('/aadhaar-v2/generate-otp', {
+        id_number: params.aadhaarNumber
+      })
 
-    /**
-     * @example
-     * {
-     *   "data": {
-     *     "if_number": true,
-     *     "otp_sent": true,
-     *     "client_id": "takdTqhCxo"
-     *   },
-     *   "status_code": 200,
-     *   "message": "",
-     *   "success": true,
-     *   "type": "aadhaar_v2_generate"
-     * }
-     */
-    return {
-      clientId: res.data.data.client_id,
-      statusCode: res.data.status_code
+      /**
+       * @example
+       * {
+       *   "data": {
+       *     "if_number": true,
+       *     "otp_sent": true,
+       *     "client_id": "takdTqhCxo"
+       *   },
+       *   "status_code": 200,
+       *   "message": "",
+       *   "success": true,
+       *   "type": "aadhaar_v2_generate"
+       * }
+       */
+      return {
+        clientId: res.data?.data?.client_id,
+        statusCode: res.data?.status_code
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+      }
     }
   }
 
   verifyOtp = async (params: IVerifyOtpParams): Promise<IVerifyOtpResponse> => {
-    const res = await this.axiosClient.post('/aadhaar-v2/submit-otp', {
-      client_id: params.clientId,
-      otp: params.otp
-    })
+    try {
+      const res = await this.axiosClient.post('/aadhaar-v2/submit-otp', {
+        client_id: params.clientId,
+        otp: params.otp
+      })
 
-    const data = res.data?.data
-
-    if (!data) {
-      throw new ServiceUnavailableException("Couldn't verify OTP")
-    }
-
-    /**
-     * @example
-     * {
-     *   "data": {
-     *     "gender": "M",
-     *     "address": {
-     *       "loc": "mirzapur",
-     *       "country": "India",
-     *       "house": "tripathi haveli, mirzapur",
-     *       "subdist": "mirzapur",
-     *       "vtc": "mirzapur",
-     *       "po": "mirzapur",
-     *       "state": "uttar pradesh",
-     *       "street": "tripathi lane",
-     *       "dist": "mirzapur"
-     *     },
-     *     "aadhaar_number": "543298761234",
-     *     "dob": "1990-08-31",
-     *     "client_id": "ZGTaWjbbfv",
-     *     "zip": "231001",
-     *     "full_name": "Munna Bhaiya",
-     *     "zip_data": "https://aadhaar-api-docs.s3.amazonaws.com/aadhaar_offline_xml.zip",
-     *     "care_of": "S/O: Kaleen Bhaiya",
-     *     "profile_image": "base64_image",
-     *     "raw_xml": "https://aadhaar-api-docs.s3.amazonaws.com/aadhaar_offline_raw_xml.xml",
-     *     "share_code": "1234",
-     *     "mobile_verified": true,
-     *     "reference_id": "123420201012232726518"
-     *   },
-     *   "status_code": 200,
-     *   "message": "",
-     *   "success": true,
-     *   "type": "aadhaav_v2_model"
-     * }
-     */
-
-    const gender = (() => {
-      switch (res.data.data?.gender) {
-        case undefined:
-          return '-'
-        case 'M':
-          return 'MALE'
-        case 'F':
-          return 'FEMALE'
-        default:
-          return 'OTHER'
+      /**
+       * @example
+       * {
+       *   "data": {
+       *     "gender": "M",
+       *     "address": {
+       *       "loc": "mirzapur",
+       *       "country": "India",
+       *       "house": "tripathi haveli, mirzapur",
+       *       "subdist": "mirzapur",
+       *       "vtc": "mirzapur",
+       *       "po": "mirzapur",
+       *       "state": "uttar pradesh",
+       *       "street": "tripathi lane",
+       *       "dist": "mirzapur"
+       *     },
+       *     "aadhaar_number": "543298761234",
+       *     "dob": "1990-08-31",
+       *     "client_id": "ZGTaWjbbfv",
+       *     "zip": "231001",
+       *     "full_name": "Munna Bhaiya",
+       *     "zip_data": "https://aadhaar-api-docs.s3.amazonaws.com/aadhaar_offline_xml.zip",
+       *     "care_of": "S/O: Kaleen Bhaiya",
+       *     "profile_image": "base64_image",
+       *     "raw_xml": "https://aadhaar-api-docs.s3.amazonaws.com/aadhaar_offline_raw_xml.xml",
+       *     "share_code": "1234",
+       *     "mobile_verified": true,
+       *     "reference_id": "123420201012232726518"
+       *   },
+       *   "status_code": 200,
+       *   "message": "",
+       *   "success": true,
+       *   "type": "aadhaav_v2_model"
+       * }
+       */
+      return {
+        data: {
+          gender: res.data?.data?.gender,
+          fullName: res.data?.data?.full_name,
+          careOf: res.data?.data?.care_of,
+          dob: res.data?.data?.dob,
+          address: {
+            house: res.data?.data?.address?.house,
+            street: res.data?.data?.address?.street,
+            vtc: res.data?.data?.address?.vtc,
+            loc: res.data?.data?.address?.loc
+          },
+          zip: res.data?.data?.zip,
+          profileImage: res.data?.data?.profile_image
+        }
       }
-    })()
-
-    
-    return {
-      data: {
-        gender,
-        fullName: res.data.data?.full_name,
-        careOf: res.data.data?.care_of,
-        dob: res.data.data?.dob,
-        address: {
-          house: res.data.data?.address?.house,
-          street: res.data.data?.address?.street,
-          vtc: res.data.data?.address?.vtc,
-          loc: res.data.data?.address?.loc
-        },
-        zip: res.data.data?.zip,
-        profileImage: res.data.data?.profile_image
+    } catch (error) {
+      if (error instanceof AxiosError) {
       }
     }
   }

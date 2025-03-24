@@ -27,13 +27,13 @@ pnpm add @mohit4bug/kver-js
 import { Kver, SurepassAadhaarAdapter } from '@mohit4bug/kver-js'
 
 // Initialize the adapter with your Surepass bearer token
-const adapter = new SurepassAadhaarAdapter({ 
-  bearerToken: 'YOUR_BEARER_TOKEN' 
+const adapter = new SurepassAadhaarAdapter({
+  bearerToken: 'YOUR_BEARER_TOKEN'
 })
 
 // Create a new Kver instance
-const kver = new Kver({ 
-  adapter, 
+const kver = new Kver({
+  adapter,
   documentType: 'aadhaar' // Support for more document types coming soon
 })
 
@@ -41,8 +41,8 @@ const kver = new Kver({
 async function verifyDocument() {
   try {
     // Generate OTP
-    const otpResponse = await kver.adapter.generateOtp({ 
-      aadhaarNumber: '123456789012' 
+    const otpResponse = await kver.adapter.generateOtp({
+      aadhaarNumber: '123456789012'
     })
     console.log('OTP Generated, Client ID:', otpResponse.clientId)
 
@@ -61,6 +61,7 @@ async function verifyDocument() {
 ## Response Types
 
 ### OTP Generation Response
+
 ```typescript
 interface IGenerateOtpResponse {
   clientId: string
@@ -69,6 +70,7 @@ interface IGenerateOtpResponse {
 ```
 
 ### Verification Response
+
 ```typescript
 // Aadhaar verification response
 interface IVerifyOtpResponse {
@@ -100,8 +102,8 @@ interface IVerifyOtpResponse {
 The SurepassAadhaarAdapter integrates with Surepass's Aadhaar verification API.
 
 ```typescript
-const adapter = new SurepassAadhaarAdapter({ 
-  bearerToken: 'YOUR_BEARER_TOKEN' 
+const adapter = new SurepassAadhaarAdapter({
+  bearerToken: 'YOUR_BEARER_TOKEN'
 })
 ```
 
